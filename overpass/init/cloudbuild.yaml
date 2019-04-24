@@ -7,7 +7,7 @@ steps:
            '-e', 'OVERPASS_PLANET_URL=http://download.geofabrik.de/europe/poland-latest.osm.bz2',
            '-e', 'OVERPASS_DIFF_URL=http://download.geofabrik.de/europe/poland-updates/',
            '-e', 'OVERPASS_COMPRESSION=lz4',
-           '-it',
+           '-i',
            'wiktorn/overpass',
            '/bin/bash -c "/app/docker-entrypoint.sh && /app/bin/update_overpass.sh && /app/bin/osm3s_query --progress --rules  < /db/db/rules/areas.osm3s"',
     ]
