@@ -1,15 +1,16 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['run', '--name', 'overpass_step1',
-           '-it'
+           '-it',
            'gcr.io/osm-vink/overpass-poland:latest',
-           '/bin/bash -c "/app/bin/update_overpass.sh && /app/bin/osm3s_query --progress --rules  < /db/db/rules/areas.osm3s"'
+           '/bin/bash -c "/app/bin/update_overpass.sh && /app/bin/osm3s_query --progress --rules  < /db/db/rules/areas.osm3s"',
     ]
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['commit',
            '-r', 'CMD /app/docker-entrypoint.sh',
-           'overpass_step1', 'gcr.io/osm-vink/overpass-poland:latest']
+           'overpass_step1', 'gcr.io/osm-vink/overpass-poland:latest',
+    ]
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/osm-vink/overpass-poland:latest']
