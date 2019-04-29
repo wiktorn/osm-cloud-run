@@ -1,5 +1,5 @@
 steps:
   - name: 'gcr.io/cloud-builders/gsutil'
     args: [
-          'cp', '**/startup.sh', 'gs://vink-osm-startup-scripts-us/'
+          'cp', './**/startup.sh', 'gs://vink-osm-startup-scripts-us/'
     ]
