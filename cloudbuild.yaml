@@ -3,3 +3,7 @@ steps:
     args: [
           'cp', 'overpass/init/startup.sh', 'gs://vink-osm-startup-scripts-us/overpass/init/startup.sh'
     ]
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: [
+          'cp', 'overpass/update/startup.sh', 'gs://vink-osm-startup-scripts-us/overpass/update/startup.sh'
+    ]
