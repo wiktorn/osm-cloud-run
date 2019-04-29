@@ -16,7 +16,7 @@ apt install -y docker.io google-cloud-sdk git
         -e OVERPASS_COMPRESSION=lz4 \
         -i \
         wiktorn/overpass-api \
-        /bin/bash -c '/app/docker-entrypoint.sh && /app/bin/update_overpass.sh && /app/bin/osm3s_query --progress --rules  < /db/db/rules/areas.osm3s'
+        /bin/bash -c '/app/docker-entrypoint.sh && /app/bin/update_overpass.sh && /app/bin/osm3s_query --progress --rules --rules --db-dir=/db/db < /db/db/rules/areas.osm3s'
 
     mkdir /app
     cd /app
@@ -34,3 +34,4 @@ apt install -y docker.io google-cloud-sdk git
 ) | gsutil cp - gs://vink-osm-startup-scripts-us/overpass/init.log
 
 gcloud compute instances list --filter 'labels.machine_type=overpass' --uri | xargs gcloud compute instances delete --quiet
+
