@@ -11,8 +11,8 @@ apt install -y docker.io google-cloud-sdk git
     docker run --name overpass_step1 \
         -e OVERPASS_META=yes \
         -e OVERPASS_MODE=init \
-        -e OVERPASS_PLANET_URL=http://download.geofabrik.de/europe/poland-latest.osm.bz2 \
-        -e OVERPASS_DIFF_URL=http://download.geofabrik.de/europe/poland-updates/ \
+        -e OVERPASS_PLANET_URL=http://download.geofabrik.de/europe/monaco-latest.osm.bz2 \
+        -e OVERPASS_DIFF_URL=http://download.geofabrik.de/europe/monaco-updates/ \
         -e OVERPASS_COMPRESSION=lz4 \
         -i \
         wiktorn/overpass-api \
