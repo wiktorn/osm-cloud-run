@@ -7,3 +7,14 @@ steps:
     args: [
           'cp', 'overpass/update/startup.sh', 'gs://vink-osm-startup-scripts-us/overpass/update/startup.sh'
     ]
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: [
+          'cp', 'overpass/update/shutdown.sh', 'gs://vink-osm-startup-scripts-us/overpass/update/startup.sh'
+    ]
+
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['functions', 'deploy', 'create_instance_and_wait',
+           '--runtime python37',
+           '--trigger-topic=osm-vink-scheduled-instances',
+    ]
