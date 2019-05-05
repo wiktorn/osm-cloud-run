@@ -36,7 +36,7 @@ def create_instance_and_wait(data: dict, context: ContextType):
     operation = create_instance(compute=compute, project=project, zone=zone, name=data['name'],
                                 machine_type=data['machine_type'], script_url_base=data['script_url_base'],
                                 machine_label=data['machine_label'], disk_size=data['disk_size'])
-    wait_for_operation(compute=compute, project=project, zone=zone, operation=operation)
+    wait_for_operation(compute=compute, project=project, zone=zone, operation=operation['name'])
 
 
 def create_instance(*, compute: googleapiclient.discovery.Resource, project, zone, name, machine_type,
