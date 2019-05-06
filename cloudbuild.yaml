@@ -15,6 +15,6 @@ steps:
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['functions', 'deploy', 'create_instance_and_wait',
-           '--runtime python37',
+           '--runtime', 'python37',
            '--trigger-topic=osm-vink-scheduled-instances',
     ]
