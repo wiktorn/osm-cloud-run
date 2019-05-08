@@ -30,6 +30,7 @@ def create_instance_and_wait(data: dict, context: ContextType):
          metadata.
     """
 
+    print("Called with data: %s" % data)
     compute = googleapiclient.discovery.build('compute', 'v1')
     project = data['project']
     zone = data['zone']
