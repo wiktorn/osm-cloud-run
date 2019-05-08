@@ -34,8 +34,10 @@ def create_instance_and_wait(data: dict, context: ContextType):
 
     compute = googleapiclient.discovery.build('compute', 'v1')
 
-    if 'data' not in data or not isinstance(data['data'], bytes):
-        raise ValueError("Malformed input: %s" % data)
+    if 'data' not in data:
+        raise ValueError("Malformed input, no data sent. Input: %s" % data)
+    if not isinstance(data['data'], str):
+        raise ValueError("Malformed input, data not of type str. Input: %s" % data)
     data = json.loads(base64.b64decode(data['data']).decode('utf-8'))
 
     project = data['project']
