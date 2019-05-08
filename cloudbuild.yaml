@@ -1,17 +1,20 @@
 steps:
   - name: 'gcr.io/cloud-builders/gsutil'
     args: [
-          'cp', 'overpass/init/startup.sh', 'gs://vink-osm-startup-scripts-us/overpass/init/startup.sh'
+          'cp', 'overpass/init/startup.sh', 'gs://vink-osm-startup-scripts-us/overpass/init/'
     ]
   - name: 'gcr.io/cloud-builders/gsutil'
     args: [
-          'cp', 'overpass/update/startup.sh', 'gs://vink-osm-startup-scripts-us/overpass/update/startup.sh'
+      'cp', 'overpass/init/shutdown.sh', 'gs://vink-osm-startup-scripts-us/overpass/init/'
     ]
   - name: 'gcr.io/cloud-builders/gsutil'
     args: [
-          'cp', 'overpass/update/shutdown.sh', 'gs://vink-osm-startup-scripts-us/overpass/update/startup.sh'
+          'cp', 'overpass/update/startup.sh', 'gs://vink-osm-startup-scripts-us/overpass/update/'
     ]
-
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: [
+          'cp', 'overpass/update/shutdown.sh', 'gs://vink-osm-startup-scripts-us/overpass/update/'
+    ]
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['functions', 'deploy', 'create_instance_and_wait',
