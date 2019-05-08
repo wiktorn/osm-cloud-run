@@ -1,3 +1,5 @@
+import base64
+import json
 import typing
 
 import googleapiclient.discovery
@@ -30,8 +32,12 @@ def create_instance_and_wait(data: dict, context: ContextType):
          metadata.
     """
 
-    print("Called with data: %s" % data)
     compute = googleapiclient.discovery.build('compute', 'v1')
+
+    if 'data' not in data or not isinstance(data['data'], bytes):
+        raise ValueError("Malformed input: %s" % data)
+    data = json.loads(base64.b64decode(data['data']).decode('utf-8'))
+
     project = data['project']
     zone = data['zone']
     operation = create_instance(compute=compute, project=project, zone=zone, name=data['name'],
