@@ -15,6 +15,14 @@ steps:
     args: [
           'cp', 'overpass/update/shutdown.sh', 'gs://vink-osm-startup-scripts-us/overpass/update/'
     ]
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: [
+          'cp', 'overpass/update_areas/startup.sh', 'gs://vink-osm-startup-scripts-us/overpass/update_areas/'
+    ]
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: [
+          'cp', 'overpass/update_areas/shutdown.sh', 'gs://vink-osm-startup-scripts-us/overpass/update_areas/'
+    ]
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['functions', 'deploy', 'create_instance_and_wait',

@@ -112,10 +112,7 @@ def create_instance(*, compute: googleapiclient.discovery.Resource, project, zon
         },
 
         'labels': {
-            'items': [{
-                'key': 'machine_type',
-                'value': machine_label
-            }]
+            'machine_type': machine_label
         }
     }
 
