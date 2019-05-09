@@ -14,8 +14,9 @@
             -e OVERPASS_COMPRESSION=gz \
             -i \
             gcr.io/osm-vink/overpass-poland:latest \
-            /bin/bash -c "/app/bin/update_overpass.sh && /app/bin/osm3s_query --progress --rules --rules --db-dir=/db/db < /db/db/rules/areas.osm3s"
+            /bin/bash -c "/app/bin/update_overpass.sh"
     docker commit --change 'CMD /app/docker-entrypoint.sh' overpass_step1 gcr.io/osm-vink/overpass-poland:latest
+    docker rm overpass_step1
     python3 -m venv /venv
     /venv/bin/pip install docker-squash
     # FROM_LAYER=`docker images gcr.io/osm-vink/overpass-poland | grep gcr.io/osm-vink/overpass-poland | grep -v latest | awk '{print $3}'`
