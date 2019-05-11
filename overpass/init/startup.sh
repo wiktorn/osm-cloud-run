@@ -28,6 +28,12 @@ apt install -y docker.io google-cloud-sdk git
         --region=us-central1 \
         --memory=1024Mi \
         --allow-unauthenticated
+
+    for SHA in `gcloud container images list-tags --filter='NOT tags=latest' gcr.io/osm-vink/overpass-poland --format='get(digest)'`
+    do
+        gcloud container images delete --quiet gcr.io/osm-vink/overpass-poland@$SHA
+    done
+
 ) | gsutil cp - gs://vink-osm-startup-scripts-us/overpass/init.log
 
 gcloud compute instances list --filter 'labels.machine_type=overpass' --uri | xargs gcloud compute instances delete --quiet
