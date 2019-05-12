@@ -5,6 +5,8 @@ apt install -y docker.io google-cloud-sdk git
 
 (
     set -e
+    echo "Starting init"
+    date
     docker run --name overpass_step1 \
         -e OVERPASS_META=yes \
         -e OVERPASS_MODE=init \
@@ -13,7 +15,7 @@ apt install -y docker.io google-cloud-sdk git
         -e OVERPASS_COMPRESSION=gz \
         -i \
         wiktorn/overpass-api \
-        /bin/bash -c '/app/docker-entrypoint.sh && /app/bin/update_overpass.sh && /app/bin/osm3s_query --progress --rules --rules --db-dir=/db/db < /db/db/rules/areas.osm3s'
+        /bin/bash -c '/app/docker-entrypoint.sh'
 
     mkdir /app
     cd /app
@@ -33,6 +35,8 @@ apt install -y docker.io google-cloud-sdk git
     do
         gcloud container images delete --quiet gcr.io/osm-vink/overpass-poland@$SHA
     done
+    echo "Finished init"
+    date
 
 ) | gsutil cp - gs://vink-osm-startup-scripts-us/overpass/init.log
 
