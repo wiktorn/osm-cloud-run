@@ -7,6 +7,8 @@ apt install -y docker.io google-cloud-sdk git
     set -e
     echo "Starting init"
     date
+    curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
+    bash install-logging-agent.sh
     docker run --name overpass_step1 \
         -e OVERPASS_META=yes \
         -e OVERPASS_MODE=init \
