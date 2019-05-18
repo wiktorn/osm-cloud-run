@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # assume gcloud is installed
 # apt install -y google-cloud-sdk
@@ -52,7 +52,7 @@
     done
     echo "Finished init"
     date
-
+    echo "Overpass init duration: ${SECONDS}"
 )
 
 gcloud compute instances list --filter 'labels.machine_type=overpass' --uri | xargs gcloud compute instances delete --quiet

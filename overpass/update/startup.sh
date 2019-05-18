@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 
 (
@@ -65,7 +65,7 @@
     done
     echo "Finished update"
     date
-
+    echo "Overpass update duration: ${SECONDS}"
 )
 
 gcloud compute instances list --filter 'labels.machine_type=overpass_update' --uri | xargs gcloud compute instances delete --quiet
