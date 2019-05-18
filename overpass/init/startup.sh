@@ -10,11 +10,6 @@
     curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
     bash install-logging-agent.sh
 
-    # mount local SSD
-    mkfs.ext4 /dev/nvme0n1
-    mkdir /var/lib/docker
-    mount /dev/nvme0n1 /var/lib/docker/
-
     # install git, docker
     apt update
     apt install -y docker.io git
@@ -64,4 +59,4 @@ gcloud compute instances list --filter 'labels.machine_type=overpass' --uri | xa
 
 #
 # trigger
-# $ gcloud pubsub topics publish osm-vink-scheduled-instances --message '{"project": "osm-vink","zone": "us-central1-c","name": "overpass-init","machine_type": "n1-standard-2","machine_label": "overpass","script_url_base": "gs://vink-osm-startup-scripts-us/overpass/init/","disk_size": "10","local_ssd": true}'
+# $ gcloud pubsub topics publish osm-vink-scheduled-instances --message '{"project": "osm-vink","zone": "us-central1-c","name": "overpass-init","machine_type": "n1-standard-2","machine_label": "overpass","script_url_base": "gs://vink-osm-startup-scripts-us/overpass/init/","disk_size": "30","local_ssd": false}'
