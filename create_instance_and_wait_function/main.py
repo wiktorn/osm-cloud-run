@@ -14,7 +14,8 @@ import time
 #     "machine_type": "n1-standard-1",
 #     "machine_label": "overpass_update",
 #     "script_url_base": "gs://vink-osm-startup-scripts-us/overpass/update/",
-#     "disk_size": "30"
+#     "disk_size": "10",
+#     "local_ssd": true
 # }
 
 class ContextType(typing.NamedTuple):
@@ -44,19 +45,20 @@ def create_instance_and_wait(data: dict, context: ContextType):
     zone = data['zone']
     operation = create_instance(compute=compute, project=project, zone=zone, name=data['name'],
                                 machine_type=data['machine_type'], script_url_base=data['script_url_base'],
-                                machine_label=data['machine_label'], disk_size=data['disk_size'])
+                                machine_label=data['machine_label'], disk_size=data.get('disk_size', '10'),
+                                local_ssd=data.get('local_ssd', False))
     wait_for_operation(compute=compute, project=project, zone=zone, operation=operation['name'])
 
 
 def create_instance(*, compute: googleapiclient.discovery.Resource, project, zone, name, machine_type,
-                    script_url_base, machine_label, disk_size='10'):
+                    script_url_base, machine_label, disk_size, local_ssd: bool):
     # Get the latest Ubuntu image
     image_response = compute.images().getFromFamily(project='ubuntu-os-cloud',
                                                     family='ubuntu-minimal-1804-lts').execute()
     source_disk_image = image_response['selfLink']
 
     # Configure the machine
-    machine_type = "zones/%s/machineTypes/%s" % (zone, machine_type)
+    machine_type = f"zones/{zone}/machineTypes/{machine_type}"
 
     startup_script_url = script_url_base + 'startup.sh'
     shutdown_script_url = script_url_base + 'shutdown.sh'
@@ -72,7 +74,7 @@ def create_instance(*, compute: googleapiclient.discovery.Resource, project, zon
                 'autoDelete': True,
                 'initializeParams': {
                     'sourceImage': source_disk_image,
-                    'diskType': "projects/%s/zones/%s/diskTypes/pd-ssd" % (project, zone),
+                    'diskType': f"projects/{project}/zones/{zone}/diskTypes/pd-ssd",
                     'diskSizeGb': disk_size
                 }
             }
@@ -115,6 +117,21 @@ def create_instance(*, compute: googleapiclient.discovery.Resource, project, zon
             'machine_type': machine_label
         }
     }
+
+    if local_ssd:
+        config['disks'].append(
+            {
+                "kind": "compute#attachedDisk",
+                "mode": "READ_WRITE",
+                "autoDelete": True,
+                "deviceName": "local-ssd-0",
+                "type": "SCRATCH",
+                "interface": "NVME",
+                "initializeParams": {
+                    "diskType": f"projects/{project}/zones/{zone}/diskTypes/local-ssd"
+                }
+            }
+        )
 
     return compute.instances().insert(
         project=project,
