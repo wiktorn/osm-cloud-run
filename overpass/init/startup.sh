@@ -53,7 +53,7 @@
     echo "Finished init"
     date
 
-) 2>1 | gsutil cp - gs://vink-osm-startup-scripts-us/overpass/init.log
+)
 
 gcloud compute instances list --filter 'labels.machine_type=overpass' --uri | xargs gcloud compute instances delete --quiet
 
