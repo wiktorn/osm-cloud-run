@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-sed -i -- "s/^[\t ]*listen.*$/listen ${PORT};/" nginx.conf
-
+sed -i -- "s/^[\t ]*listen.*$/listen ${PORT};/" /etc/nginx/nginx.conf
