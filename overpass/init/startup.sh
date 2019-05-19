@@ -30,7 +30,7 @@
     cd /app
     git clone https://github.com/wiktorn/osm-cloud-run.git
     cd osm-cloud-run/overpass/init
-    docker cp supervisord.conf overpass_step1:/etc/supervisor/supervisord.conf
+    docker cp supervisord.conf overpass_step1:/etc/supervisor/conf.d/supervisord.conf
     docker cp update_nginx_port.sh overpass_step1:/docker-entrypoint-initdb.d/update_nginx_port.sh
     docker commit --change 'CMD /app/docker-entrypoint.sh' overpass_step1 gcr.io/osm-vink/overpass-poland:latest
 
@@ -40,6 +40,7 @@
 
     # deploy on Cloud Run
     gcloud beta run deploy overpass-poland \
+        --async \
         --image=gcr.io/osm-vink/overpass-poland:latest \
         --region=us-central1 \
         --memory=1024Mi \
